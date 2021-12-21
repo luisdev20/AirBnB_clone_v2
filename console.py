@@ -124,7 +124,7 @@ class HBNBCommand(cmd.Cmd):
 
             if args_sp[0] not in HBNBCommand.classes:
                 raise NameError
- 
+
             kwargs = {}
 
             for i in range(1, len(args_sp)):
@@ -141,17 +141,16 @@ class HBNBCommand(cmd.Cmd):
             if kwargs == {}:
                 new_instance = HBNBCommand.classes[args_sp[0]]()
             else:
-                 new_instance = HBNBCommand.classes[args_sp[0]](**kwargs)
-                 storage.new(new_instance)
+                new_instance = HBNBCommand.classes[args_sp[0]](**kwargs)
+                storage.new(new_instance)
 
             storage.save()
             print(new_instance.id)
-            print (kwargs)
 
         except NameError:
             print("** class doesn't exist **")
         except SyntaxError:
-            print ("** class name missing **")
+            print("** class name missing **")
 
     def help_create(self):
         """ Help information for the create method """
