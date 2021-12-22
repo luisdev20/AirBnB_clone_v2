@@ -138,7 +138,6 @@ class HBNBCommand(cmd.Cmd):
                         continue
                 kwargs[key] = value
 
-            print (kwargs)
             if kwargs == {}:
                 new_instance = HBNBCommand.classes[args_sp[0]]()
             else:
