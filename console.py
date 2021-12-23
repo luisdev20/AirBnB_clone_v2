@@ -2,6 +2,7 @@
 """ Console Module """
 import cmd
 import sys
+import sqlalchemy
 from models.base_model import BaseModel
 from models.__init__ import storage, engineMode
 from models.user import User
@@ -143,9 +144,11 @@ class HBNBCommand(cmd.Cmd):
             else:
                 new_instance = HBNBCommand.classes[args_sp[0]](**kwargs)
                 storage.new(new_instance)
-            storage.save()
-            print(new_instance.id)
-
+            try:
+                storage.save()
+                print(new_instance.id)
+            except sqlalchemy.exc.IntegrityError:
+                print("** This state_id didn't match with any stored state **")
         except NameError:
             print("** class doesn't exist **")
         except SyntaxError:
