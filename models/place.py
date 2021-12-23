@@ -7,15 +7,15 @@ from sqlalchemy import ForeignKey, Column, String, Integer, Float
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Table, PrimaryKeyConstraint
 
-
-place_amenity = Table('place_amenity', Base.metadata,
-                      Column('place_id', String(60),
-                             ForeignKey('places.id'),
-                             nullable=False),
-                      Column('amenity_id', String(60),
-                             ForeignKey('amenities.id'),
-                             nullable=False),
-                      PrimaryKeyConstraint('place_id', 'amenity_id'))
+if getenv("HBNB_TYPE_STORAGE") == "db":
+    place_amenity = Table('place_amenity', Base.metadata,
+                          Column('place_id', String(60),
+                                 ForeignKey('places.id'),
+                                 nullable=False),
+                          Column('amenity_id', String(60),
+                                 ForeignKey('amenities.id'),
+                                 nullable=False),
+                          PrimaryKeyConstraint('place_id', 'amenity_id'))
 
 
 class Place(BaseModel, Base):
@@ -34,9 +34,10 @@ class Place(BaseModel, Base):
     reviews = relationship("Review", backref="place",
                            cascade="all, delete-orphan")
     amenity_ids = []
-    amenities = relationship("Amenity", secondary=place_amenity,
-                             back_populates="place_amenities",
-                             viewonly=False)
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+        amenities = relationship("Amenity", secondary=place_amenity,
+                                 back_populates="place_amenities",
+                                 viewonly=False)
 
     if getenv("HBNB_TYPE_STORAGE") != "db":
 
