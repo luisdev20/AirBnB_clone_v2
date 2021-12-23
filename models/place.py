@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 import models
+from os import getenv
 from models.base_model import BaseModel, Base
 from sqlalchemy import ForeignKey, Column, String, Integer, Float
 from sqlalchemy.orm import relationship
@@ -37,7 +38,7 @@ class Place(BaseModel, Base):
                              back_populates="place_amenities",
                              viewonly=False)
 
-    if models.engineMode != "db":
+    if getenv("HBNB_TYPE_STORAGE") != "db":
 
         @property
         def amenities(self):
