@@ -6,20 +6,16 @@ from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, DateTime
 
-if models.engineMode == "db":
-    Base = declarative_base()
-else:
-    Base = object
+Base = declarative_base()
 
 
 class BaseModel:
     """A base class for all hbnb models"""
-    if models.engineMode == "db":
-        id = Column(String(60), nullable=False, primary_key=True)
-        created_at = Column(DateTime, default=datetime.utcnow(),
-                            nullable=False)
-        updated_at = Column(DateTime, default=datetime.utcnow(),
-                            nullable=False)
+    id = Column(String(60), nullable=False, primary_key=True)
+    created_at = Column(DateTime, default=datetime.utcnow(),
+                        nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow(),
+                        nullable=False)
 
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""

@@ -33,7 +33,7 @@ class DBStorage:
         """Returns a dictionary from a database query"""
         clsDict = {}
         if cls:
-            lstobj = self.__session.query(cls).all()
+            lstobj = self.__session.query(eval(cls)).all()
             for obj in lstobj:
                 clsname = type(obj).__name__
                 clsstr = "{}.{}".format(clsname, obj.id)
